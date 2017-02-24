@@ -378,6 +378,11 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
 		// Loop all sheets
 		$sheetId = 0;
 		foreach ($sheets as $sheet) {
+            // refresh column length
+            $columnDimensions = $sheet->getColumnDimensions();
+            if ($columnDimensions) {
+                $sheet->setCachedHighestColumn(end($columnDimensions)->getColumnIndex());
+            }
 			// Write table header
 			$html .= $this->_generateTableHeader($sheet);
 

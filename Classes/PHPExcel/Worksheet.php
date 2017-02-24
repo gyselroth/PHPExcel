@@ -511,13 +511,6 @@ class PHPExcel_Worksheet implements PHPExcel_IComparable
     }
 
     /**
-     * @param string $column
-     */
-    public function setCachedHighestColumn($column) {
-        $this->cachedHighestColumn = $column;
-    }
-
-    /**
      * Get collection of column dimensions
      *
      * @return PHPExcel_Worksheet_ColumnDimension[]

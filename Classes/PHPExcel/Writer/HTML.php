@@ -416,14 +416,19 @@ class PHPExcel_Writer_HTML extends PHPExcel_Writer_Abstract implements PHPExcel_
         // Loop all sheets
         $sheetId = 0;
         foreach ($sheets as $sheet) {
+            // refresh column length
+            $columnDimensions = $sheet->getColumnDimensions();
+            if ($columnDimensions) {
+                $sheet->setCachedHighestColumn(end($columnDimensions)->getColumnIndex());
+            }
             // Write table header
             $html .= $this->generateTableHeader($sheet);
 
             // Get worksheet dimension
-            $dimension = explode(':', $sheet->calculateWorksheetDimension());
-            $dimension[0] = PHPExcel_Cell::coordinateFromString($dimension[0]);
+            $dimension       = explode(':', $sheet->calculateWorksheetDimension());
+            $dimension[0]    = PHPExcel_Cell::coordinateFromString($dimension[0]);
             $dimension[0][0] = PHPExcel_Cell::columnIndexFromString($dimension[0][0]) - 1;
-            $dimension[1] = PHPExcel_Cell::coordinateFromString($dimension[1]);
+            $dimension[1]    = PHPExcel_Cell::coordinateFromString($dimension[1]);
             $dimension[1][0] = PHPExcel_Cell::columnIndexFromString($dimension[1][0]) - 1;
 
             // row min,max
